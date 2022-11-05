@@ -28,7 +28,7 @@ const Home: NextPage = () => {
                 <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
                     {isErrorMutation ? <ErrorCard setError={setIsErrorMutation}/> : null}
                     <h1 className="text-5xl font-extrabold leading-normal text-gray-700 md:text-[5rem]">
-                        Select your Day
+                        Select your Study-Day
                     </h1>
 
                     <div className="my-3 grid gap-4 pt-3 text-center grid-cols-2 lg:w-2/3 w-full">
