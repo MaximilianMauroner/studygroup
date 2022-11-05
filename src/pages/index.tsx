@@ -110,10 +110,10 @@ type DayCardProps =
 
 const DayCard = ({name, description, dateEnum, setData, setLoading, setError}: DayCardProps) => {
 
-    const mutation = trpc.studyDate.selectDay.useMutation();
-    const selectCard = () => {
-        setLoading(true)
-        mutation.mutate({dateEnum: dateEnum}, {
+        const mutation = trpc.studyDate.selectDay.useMutation();
+        const selectCard = () => {
+            setLoading(true)
+            mutation.mutate({dateEnum: dateEnum}, {
                 onSuccess: (data: studyDate) => {
                     setData(data)
                     setLoading(false)
@@ -123,12 +123,12 @@ const DayCard = ({name, description, dateEnum, setData, setLoading, setError}: D
                     setLoading(false)
                 }
             });
-    }
-    const borderColor = dateEnum === "SATURDAY" || dateEnum === "MONDAY" ? "border-purple-500" : "border-indigo-500";
-    return (
+        }
+        const borderColor = dateEnum === "SATURDAY" || dateEnum === "MONDAY" ? "border-purple-500" : "border-indigo-500";
+        return (
             <button onClick={() => selectCard()}>
                 <section
-                    className={"flex flex-col justify-center rounded border-2 p-6 shadow-xl duration-500 motion-safe:hover:scale-105 "
+                    className={"flex flex-col justify-center rounded border-2 px-1 sm:px-6 py-6 shadow-xl duration-500 motion-safe:hover:scale-105 "
                         + borderColor}>
                     <h2 className="text-lg text-gray-700">{name}</h2>
                     <p className="text-sm text-gray-600">{description}</p>
@@ -169,9 +169,9 @@ const ErrorCard = ({setError}: { setError: (isError: boolean) => void }) => {
 }
 const AuthShowcase: React.FC = () => {
 
-    const {data: sessionData} = useSession();
-    const borderColor = sessionData ? "border-red-500" : "border-green-500"
-    return (
+        const {data: sessionData} = useSession();
+        const borderColor = sessionData ? "border-red-500" : "border-green-500"
+        return (
             <div className="mt-5 pt-5 flex flex-col items-center justify-center gap-2">
                 {sessionData && (
                     <p className="text-xl text-sky-500">
