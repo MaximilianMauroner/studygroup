@@ -2,9 +2,9 @@ import {type NextPage} from "next";
 import Head from "next/head";
 import {signIn, signOut, useSession} from "next-auth/react";
 import {trpc} from "../utils/trpc";
+import type {RouterTypes} from "../utils/trpc";
 import {LoadingComponent} from "../components/loading_component";
 import {useState} from "react";
-import {RouterTypes} from "../utils/trpc";
 
 type studyDate = RouterTypes['studyDate']['getAll']['output']
 type singleStudyDate = RouterTypes['studyDate']['getAll']['output'][0]
@@ -102,16 +102,14 @@ const DayCard = (
         }
         const borderColor = dateEnum === "SATURDAY" ? "border-purple-500" : "border-indigo-500";
         return (
-            <div>
-                <button onClick={() => selectCard()}>
-                    <section
-                        className={"flex flex-col justify-center rounded border-2 p-6 shadow-xl duration-500 motion-safe:hover:scale-105 "
-                            + borderColor}>
-                        <h2 className="text-lg text-gray-700">{name}</h2>
-                        <p className="text-sm text-gray-600">{description}</p>
-                    </section>
-                </button>
-            </div>
+            <button onClick={() => selectCard()}>
+                <section
+                    className={"flex flex-col justify-center rounded border-2 p-6 shadow-xl duration-500 motion-safe:hover:scale-105 "
+                        + borderColor}>
+                    <h2 className="text-lg text-gray-700">{name}</h2>
+                    <p className="text-sm text-gray-600">{description}</p>
+                </section>
+            </button>
         );
     }
 ;
