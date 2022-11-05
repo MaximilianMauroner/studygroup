@@ -4,10 +4,15 @@ import {signIn, signOut, useSession} from "next-auth/react";
 import {trpc} from "../utils/trpc";
 import {LoadingComponent} from "../components/loading_component";
 import {useState} from "react";
+import {RouterTypes} from "../utils/trpc";
+
+type studyDate = RouterTypes['studyDate']['getAll']['output']
+type singleStudyDate = RouterTypes['studyDate']['getAll']['output'][0]
 
 const Home: NextPage = () => {
-        const [userData, setUserData] = useState<any>([])
+        const [userData, setUserData] = useState<studyDate>([])
         const [isLoadingMutation, setIsLoadingMutation] = useState(false);
+        const {data} = trpc.studyDate.getAll.useQuery();
         const {isLoading} = trpc.studyDate.getAll.useQuery(undefined, {
             onSuccess: (data) => {
                 setUserData(data)
@@ -34,19 +39,21 @@ const Home: NextPage = () => {
                     <div className="my-3 grid gap-4 pt-3 text-center grid-cols-2 lg:w-2/3 w-full">
                         {isLoading || isLoadingMutation ? <> <LoadingComponent/> <LoadingComponent/>  </> : (<>
                             <div>
-                                {userData?.map((date: any) => (
+                                {userData?.map((studyDate: singleStudyDate) => (
                                     <>
-                                        {date.date === "SATURDAY" && date.user.name && date.user.image ?
-                                            <UserCard key={date.id} name={date.user.name} image={date.user.image}
+                                        {studyDate.date === "SATURDAY" && studyDate.user.name && studyDate.user.image ?
+                                            <UserCard key={studyDate.id} name={studyDate.user.name}
+                                                      image={studyDate.user.image}
                                                       studyDate={"SATURDAY"}/> : null}
                                     </>
                                 ))}
                             </div>
                             <div>
-                                {userData?.map((date: any) => (
+                                {userData?.map((studyDate: singleStudyDate) => (
                                     <>
-                                        {date.date === "SUNDAY" && date.user.name && date.user.image ?
-                                            <UserCard key={date.id} name={date.user.name} image={date.user.image}
+                                        {studyDate.date === "SUNDAY" && studyDate.user.name && studyDate.user.image ?
+                                            <UserCard key={studyDate.id} name={studyDate.user.name}
+                                                      image={studyDate.user.image}
                                                       studyDate={"SUNDAY"}/> : null}
                                     </>
                                 ))}
@@ -67,7 +74,7 @@ type DayCardProps =
         name: string;
         description: string;
         dateEnum: string;
-        setData: (data: any) => void;
+        setData: (data: studyDate) => void;
         setLoading: (isLoading: boolean) => void;
     }
     ;
@@ -81,7 +88,7 @@ const DayCard = (
         const selectCard = () => {
             setLoading(true)
             mutation.mutate({dateEnum: dateEnum}, {
-                onSuccess: (data) => {
+                onSuccess: (data: studyDate) => {
                     setData(data)
                     setLoading(false)
                 },
