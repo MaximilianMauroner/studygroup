@@ -1,5 +1,5 @@
 import {z} from "zod";
-import {StudyDate} from "@prisma/client"
+import {StudyDate, ExerciseDate} from "@prisma/client"
 import {router, publicProcedure, protectedProcedure} from "../trpc";
 
 
@@ -8,10 +8,7 @@ export const studyDateRouter = router({
         return ctx.prisma.studentStudyDate.findMany({
             include: {
                 user: true
-            },
-            orderBy: {
-                date: 'asc',
-            },
+            }
         });
     }),
     selectDay: protectedProcedure
@@ -21,33 +18,56 @@ export const studyDateRouter = router({
             })
         )
         .mutation(async ({ctx, input}) => {
-                let date = undefined
-                if (StudyDate.SUNDAY === input.dateEnum) {
-                    date = StudyDate.SUNDAY;
-                } else {
-                    date = StudyDate.SATURDAY;
-                }
-                const userId = ctx.session.user.id;
+                let studyDate = undefined
+                let exerciseDate = undefined;
 
-                await ctx.prisma.studentStudyDate.upsert({
-                    where: {
-                        userId: userId
-                    },
-                    update: {
-                        userId: userId,
-                        date: date,
-                    },
-                    create: {
-                        userId: userId,
-                        date: date
-                    },
-                });
+                if (StudyDate.SATURDAY === input.dateEnum) {
+                    studyDate = StudyDate.SATURDAY;
+                } else if (StudyDate.SUNDAY === input.dateEnum) {
+                    studyDate = StudyDate.SUNDAY;
+                }
+
+                if (ExerciseDate.MONDAY === input.dateEnum) {
+                    exerciseDate = ExerciseDate.MONDAY;
+                } else if (ExerciseDate.WEDNESDAY === input.dateEnum) {
+                    exerciseDate = ExerciseDate.WEDNESDAY;
+                }
+
+
+                const userId = ctx.session.user.id;
+                if (exerciseDate) {
+                    await ctx.prisma.studentStudyDate.upsert({
+                        where: {
+                            userId: userId
+                        },
+                        update: {
+                            userId: userId,
+                            exerciseDate: exerciseDate,
+                        },
+                        create: {
+                            userId: userId,
+                            exerciseDate: exerciseDate
+                        },
+                    });
+                } else if (studyDate) {
+                    await ctx.prisma.studentStudyDate.upsert({
+                        where: {
+                            userId: userId
+                        },
+                        update: {
+                            userId: userId,
+                            date: studyDate,
+                        },
+                        create: {
+                            userId: userId,
+                            date: studyDate,
+                            exerciseDate: ExerciseDate.NULL
+                        },
+                    });
+                }
                 return ctx.prisma.studentStudyDate.findMany({
                     include: {
                         user: true
-                    },
-                    orderBy: {
-                        date: 'asc',
                     },
                 });
             }

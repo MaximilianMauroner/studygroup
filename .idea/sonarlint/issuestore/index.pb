@@ -3,10 +3,6 @@
 tsconfig.json,6\1\61ebb9fd6e8cf9082658121d5d81e297791dacd0
 4
 .env,3\c\3c84dcdc6bbe3d7817c49dcdc327b926fea1808a
-<
-package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
-D
-prisma/schema.prisma,1\8\187e4a6f168cf143dde68ce28a29ae08ce9b9578
 N
 src/server/trpc/router/auth.ts,6\b\6bbf78ed3daec81559c7a2ed736de2de9a0c5ebe
 G
