@@ -174,8 +174,8 @@ const AuthShowcase: React.FC = () => {
     return (
             <div className="mt-5 pt-5 flex flex-col items-center justify-center gap-2">
                 {sessionData && (
-                    <p className="text-2xl text-blue-500">
-                        Logged in as {sessionData?.user?.name}
+                    <p className="text-xl text-sky-500">
+                        Logged in as <span className={"font-medium"}>{sessionData?.user?.name}</span>
                     </p>
                 )}
                 <button
