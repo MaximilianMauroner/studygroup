@@ -33,9 +33,9 @@ const Home: NextPage = () => {
                     </h1>
 
                     <div className="my-3 grid gap-4 pt-3 text-center grid-cols-2 lg:w-2/3 w-full">
-                        <DayCard name={"Saturday"} description={"Saturday at 12:00"} dateEnum={"SATURDAY"}
+                        <DayCard name={"Saturday"} description={"Saturday, time to be determined"} dateEnum={"SATURDAY"}
                                  setData={setUserData} setLoading={setIsLoadingMutation} setError={setIsErrorMutation}/>
-                        <DayCard name={"Sunday"} description={"Sunday at 12:00"} dateEnum={"SUNDAY"}
+                        <DayCard name={"Sunday"} description={"Sunday at 13:00"} dateEnum={"SUNDAY"}
                                  setData={setUserData} setLoading={setIsLoadingMutation} setError={setIsErrorMutation}/>
                     </div>
                     <div className="my-3 grid gap-4 pt-3 text-center grid-cols-2 lg:w-2/3 w-full">
